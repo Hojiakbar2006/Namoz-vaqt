@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from telegram import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 
-from database import Database
+from database.database import Database
 
 
 async def main_menu(context, chat_id):

@@ -1,8 +1,8 @@
 from telegram.ext import ApplicationBuilder, filters, CommandHandler, CallbackQueryHandler, MessageHandler
 from function import main_menu
-from message_handler import message_handler
-from inline_message_handler import inline_message_handler
-from config import users_id, TOKEN, admin_id
+from handler.message_handler import message_handler
+from handler.inline_message_handler import inline_message_handler
+from config.config import users_id, TOKEN, admin_id
 
 
 async def start_handler(update, context):
