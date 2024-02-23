@@ -16,12 +16,8 @@ async def inline_message_handler(update, context):
         if data_sp[1] == "Back to region":
             await send_regions(context, chat_id, message_id)
         else:
+            await remove_inline(query, context, chat_id, message_id)
             await send_photo(context, chat_id, data_sp)
-            await query.message.edit_text(
-                text="🕓",
-                reply_markup=None,
-            )
-            await context.bot.delete_message(chat_id, message_id)
 
     elif data_sp[0] == "namaz":
         if data_sp[1] == "back":

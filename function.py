@@ -29,7 +29,7 @@ async def remove_inline(query, context, chat_id, message_id):
 
 
 async def send_regions(context, chat_id, message_id=None):
-    regions = Database("data.db").get_regions()
+    regions = Database("./database/./data.db").get_regions()
     buttons = [[InlineKeyboardButton(text=regions[0]['region_name'], callback_data=f"region_{regions[0]['id']}"),
                 InlineKeyboardButton(text=regions[1]['region_name'], callback_data=f"region_{regions[1]['id']}")],
                [InlineKeyboardButton(text=regions[2]['region_name'], callback_data=f"region_{regions[2]['id']}"),
@@ -64,13 +64,13 @@ async def send_regions(context, chat_id, message_id=None):
 async def send_photo(context, chat_id, data_sp):
     re = requests.get(f"https://namozvaqti.uz/shahar/{data_sp[1]}")
     soup = BeautifulSoup(re.text, "html.parser")
-    city = Database("data.db").get_one_city(data_sp[1])
+    city = Database("./database/./data.db").get_one_city(data_sp[1])
     time = soup.find_all(class_="time")
     name = soup.find_all(class_="nam")
     text = soup.find(class_="vil").text.split("            ")
     text_2 = text[1].split("\n")
     await context.bot.sendPhoto(
-        photo=open("mosque.jpg", "rb"),
+        photo=open("./config/mosque.jpg", "rb"),
         chat_id=chat_id,
         caption=f"<strong>🕌{city[0]['city_name']} Namoz vaqtlari</strong>\n\n"
         f"{name[0].text}:\t\t{time[0].text}  (gacha saharlik)\n"
@@ -80,22 +80,12 @@ async def send_photo(context, chat_id, data_sp):
         f"{name[4].text}:\t\t{time[4].text}  (dan song iftor)\n"
         f"{name[5].text}:\t\t{time[5].text}\n\n"
         f"{text_2[0]}",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        text="Namoz haqida ko'proq ma'lumot",
-                        callback_data="more_action"
-                    )
-                ]
-            ]
-        ),
         parse_mode="HTML"
     )
 
 
 async def send_cities(context, chat_id, data_sp, message_id=None):
-    city = Database("data.db").get_city(region_id=int(data_sp[1]))
+    city = Database("./database/data.db").get_city(region_id=int(data_sp[1]))
     buttons = []
     for i in city:
         buttons.append([InlineKeyboardButton(
@@ -120,7 +110,7 @@ async def send_cities(context, chat_id, data_sp, message_id=None):
 
 
 async def send_buttons(context, chat_id, message_id=None):
-    informs = Database("data.db").get_namaz()
+    informs = Database("./database/./data.db").get_namaz()
     buttons = [
         [
             InlineKeyboardButton(text=informs[0]['namaz_name'], callback_data=f"namaz_{
@@ -159,7 +149,7 @@ async def send_buttons(context, chat_id, message_id=None):
 
 
 async def send_namaz_inform(context, chat_id, id):
-    inform = Database("data.db").get_one_namaz(id)
+    inform = Database("./database/./data.db").get_one_namaz(id)
     text = (f"{inform[0]['namaz_name']} namozi\n\n"
             f"{inform[0]['text']}")
     buttons = [
